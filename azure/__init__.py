@@ -778,7 +778,7 @@ def _parse_response_body_from_xml_text(respbody, return_type):
     '''
     doc = minidom.parseString(respbody)
     return_obj = return_type()
-    xml_name = return_type._xml_name if hasattr(return_type, '_xml_name') else return_type.__name__ 
+    xml_name = return_type._xml_name if hasattr(return_type, '_xml_name') else return_type.__name__
     for node in _get_child_nodes(doc, xml_name):
         _fill_data_to_return_object(node, return_obj)
 
@@ -834,13 +834,13 @@ class _scalar_list_of(list):
         self.list_type = list_type
         self.xml_element_name = xml_element_name
         super(_scalar_list_of, self).__init__()
-        
+
 class _xml_attribute:
-    
+
     """a accessor to XML attributes
     expected to go in it along with its xml element name.
     Used for deserialization and construction"""
-    
+
     def __init__(self, xml_element_name):
         self.xml_element_name = xml_element_name
 
@@ -980,3 +980,8 @@ def _sign_string(key, string_to_sign, key_is_base64=True):
     digest = signed_hmac_sha256.digest()
     encoded_digest = _encode_base64(digest)
     return encoded_digest
+
+def _sign_string_in_sas_context(key, string_to_sign, key_is_base64=True):
+    string_to_sign += "\n\n\n\n\n"
+    return _sign_string(key, string_to_sign, key_is_base64)
+

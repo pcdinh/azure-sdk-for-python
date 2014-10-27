@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-from azure import _sign_string, url_quote
+from azure import _sign_string, url_quote, _sign_string_in_sas_context
 from azure.storage import X_MS_VERSION
 
 #-------------------------------------------------------------------------
@@ -228,4 +228,4 @@ class SharedAccessSignature(object):
         ''' use HMAC-SHA256 to sign the string and convert it as base64
         encoded string. '''
 
-        return _sign_string(self.account_key, string_to_sign)
+        return _sign_string_in_sas_context(self.account_key, string_to_sign)
